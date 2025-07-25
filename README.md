@@ -1,143 +1,175 @@
-# Prepare your package :
-
-## 1. Add in your repository environment variables and deploy keys:
-
-### 1.1 Prerequisites
-
-#### 1.1.1 SSH
-Generated SSH key with `ssh-keygen -t ed25519 -C "your_mail@domain.ext" -f your_package_name`
-
-- Get the public key with:
-	```bash
-	cat your_package_name.pub
-	```
-	You will get an output like this:
-	```
-	ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC ...
-	```
-
-- Get the private key with:
-	```bash
-	cat your_package_name
-	```
-	You will get an output like this:
-	```
-	-----BEGIN OPENSSH PRIVATE KEY-----
-	...
-	-----END OPENSSH PRIVATE KEY-----
-	```
-
-#### 1.1.2 GPG **(You can reuse your existing GPG key if you have one for you account)**
-
-- Generate a GPG key with `gpg --full-generate-key` and follow the prompts to create a key suitable for signing commits and tags **whithout passphrase**.
-
-- Get the public key with:
-	```bash
-		gpg --armor --export your_email@domain.ext
-	```
-	
-	You will get an output like this:
-	```
-	-----BEGIN PGP PUBLIC KEY BLOCK-----
-	...
-	-----END PGP PUBLIC KEY BLOCK-----
-	```
-	And then copy the output and put in yourh github account settings -> SSH and GPG keys -> New GPG key.
-
-- Get the private key (for github-action) with:
-	```bash
-	gpg --armor --export-secret-keys your_email@domain.ext
-	```
-	You will get an output like this:
-	```
-	-----BEGIN PGP PRIVATE KEY BLOCK-----
-	...
-	-----END PGP PRIVATE KEY BLOCK-----
-	```
-
-### 1.2 Deploy keys
-Create a deploy key in your repository example `SSH_KEY` and put the public key generated in step [1.1.1](#111-ssh).
-
-### 1.3 Environment variables
-
-All environment variables are used in the workflow!
-
-Add the following environment variables to your repository settings:
-
-- `KEY_SSH`: The private SSH key for accessing the repository. (Generated in step [1.1.1](#111-ssh))
-- `KEY_GPG`: The GPG private key for signing commits and tags for git (Generated in step [1.1.2](#112-gpg))
-- `GIT_EMAIL`: Your email address associated with the GPG key.
-- `NPM_TOKEN`: Your npm token for publishing packages.
-
-## 2 Configure your repository
-- Add Ruleset for `main` and `develop` branches.
-- Add tag `need-triage` for issues.
-- Add your settings..
-
-## 3 Configure your package.json
-Update :
-- `name`: The name of your package, e.g., `@your-scope/your-package-name` or `your-package-name`.
-- `version`: Reset to `1.0.0`. or the version you want to start with.
-- `description`: A brief description of your package.
-- `keywords`: Add relevant keywords to help others find your package. (e.g., `["bun", "package-template"]`)
-- `exports`: Define the entry points for your package. For example:
-	```json
-	"exports": {
-		".": "./dist/index.js",
-		"./types": "./dist/types/index.js"
-	}
-	```
-
-## 4 Configure your builder
-Just change `entrypoints` in `builder.ts` to your entry point file. (e.g., `source/index.ts`).
-
-## 5 Update README.md
-Update the README.md file with relevant information about your package.
-
----
----
-<!-- You Can Remove all content above this line -->
-
-# 📦 Package Template
+# 🐞 NowaraJS Error
 
 ## 📌 Table of Contents
 
-- [📦 Package Template](#-package-template)
+- [🐞 NowaraJS Error](#-nowarajs-error)
 	- [📌 Table of Contents](#-table-of-contents)
 	- [📝 Description](#-description)
-	- [🌟 Documentation](#-documentation)
+	- [✨ Features](#-features)
 	- [🔧 Installation](#-installation)
 	- [⚙️ Usage](#-usage)
+	- [🐞 Error Classes](#-error-classes)
+	- [📚 API Reference](#-api-reference)
 	- [⚖️ License](#-license)
 	- [📧 Contact](#-contact)
 
 ## 📝 Description
 
-> Template for creating new npm packages with Bun.
+> A comprehensive collection of error classes for robust error handling in TypeScript applications.
 
-**Package Template** provides a starting point for building and publishing npm packages. Customize this section with a description of your package's purpose and features.
+**NowaraJS Error** provides a structured approach to error handling with enhanced error classes that include additional metadata like unique identifiers, timestamps, and HTTP status codes. It's designed to improve debugging and error tracking in modern applications.
 
-## 🌟 Documentation
+## ✨ Features
 
-- [References](https://your-package-docs.com)  
-	*(Update this link to your package documentation if needed.)*
+- 🆔 **Unique Error IDs**: Each error gets a UUID for tracking
+- 📅 **Timestamps**: Automatic error creation timestamps
+- 🌐 **HTTP Status Codes**: Built-in HTTP error support with status codes
+- 🐞 **Error Classification**: Distinguish between client and server errors
+- 🎯 **Type Safety**: Full TypeScript support with generics
+- 📦 **Lightweight**: Minimal dependencies and optimized for performance
+- 🛠️ **Easy Integration**: Simple import and usage
 
 ## 🔧 Installation
 
 ```bash
-bun add @your-scope/your-package-name
+bun add @nowarajs/error
 ```
-Replace `@your-scope/your-package-name` with your actual package name.
+
+> **Note**: This package supports both Bun and Node.js environments.
 
 ## ⚙️ Usage
 
-```ts
-import { YourExportedFunction } from '@your-scope/your-package-name'
+### Basic Error Handling
 
-// Example usage
-YourExportedFunction()
+```ts
+import { BaseError, HttpError } from '@nowarajs/error';
+
+// Basic error with message
+try {
+	throw new BaseError({ message: 'Something went wrong' });
+} catch (error) {
+	if (error instanceof BaseError) {
+		console.log(`Error ID: ${error.uuid}`);
+		console.log(`Occurred at: ${error.date.toISOString()}`);
+		console.log(`Message: ${error.message}`);
+	}
+}
+
+// HTTP error with status code
+try {
+	throw new HttpError({
+		message: 'User not found',
+		httpStatusCode: 'NOT_FOUND'
+	});
+} catch (error) {
+	if (error instanceof HttpError) {
+		console.log(`HTTP Status: ${error.httpStatusCode}`); // 404
+		console.log(`Is client error: ${error.isClientError}`); // true
+		console.log(`Is server error: ${error.isServerError}`); // false
+	}
+}
 ```
-Update this section with usage examples relevant to your package.
+
+### Error Options
+
+```ts
+import type { BaseErrorOptions, HttpErrorOptions } from '@nowarajs/error/types';
+
+// Base error options
+interface BaseErrorOptions<TCause = unknown> {
+	message?: string;    // Error message
+	cause?: TCause;      // Error cause (original error or context)
+}
+
+// HTTP error options
+interface HttpErrorOptions<TCause = unknown> extends BaseErrorOptions<TCause> {
+	httpStatusCode?: keyof typeof HTTP_STATUS_CODES;  // HTTP status code
+}
+```
+
+### Advanced Usage with Custom Causes
+
+```ts
+import { BaseError, HttpError } from '@nowarajs/error';
+
+// Error with custom cause type
+interface ValidationContext {
+	field: string;
+	value: unknown;
+	rule: string;
+}
+
+try {
+	throw new BaseError<ValidationContext>({
+		message: 'Validation failed',
+		cause: {
+			field: 'email',
+			value: 'invalid-email',
+			rule: 'email_format'
+		}
+	});
+} catch (error) {
+	if (error instanceof BaseError && error.cause) {
+		console.log(`Field: ${error.cause.field}`);
+		console.log(`Invalid value: ${error.cause.value}`);
+		console.log(`Failed rule: ${error.cause.rule}`);
+	}
+}
+
+// Chaining errors
+try {
+	// Some operation that might fail
+	throw new Error('Database connection failed');
+} catch (originalError) {
+	throw new HttpError({
+		message: 'Unable to fetch user data',
+		httpStatusCode: 'INTERNAL_SERVER_ERROR',
+		cause: originalError
+	});
+}
+```
+
+## 🐞 Error Classes
+
+### BaseError
+
+The foundation error class with enhanced metadata:
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `uuid` | `string` | Unique identifier for the error |
+| `date` | `Date` | Timestamp when the error was created |
+| `message` | `string` | Error message |
+| `cause` | `TCause` | Optional cause of the error |
+
+### HttpError
+
+Extends BaseError with HTTP-specific functionality:
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `httpStatusCode` | `number` | HTTP status code (400-511) |
+| `isClientError` | `boolean` | True if status code is 4xx |
+| `isServerError` | `boolean` | True if status code is 5xx |
+
+### Available HTTP Status Codes
+
+```ts
+// Client errors (4xx)
+'BAD_REQUEST', 'UNAUTHORIZED', 'FORBIDDEN', 'NOT_FOUND', 
+'METHOD_NOT_ALLOWED', 'CONFLICT', 'UNPROCESSABLE_ENTITY', 
+'TOO_MANY_REQUESTS', // ... and more
+
+// Server errors (5xx)
+'INTERNAL_SERVER_ERROR', 'NOT_IMPLEMENTED', 'BAD_GATEWAY',
+'SERVICE_UNAVAILABLE', 'GATEWAY_TIMEOUT' // ... and more
+```
+
+## 📚 API Reference
+
+You can find the complete API reference documentation for `NowaraJS Error` at:
+
+- [Reference Documentation](https://nowarajs.github.io/error/)
 
 ## ⚖️ License
 
@@ -145,7 +177,5 @@ Distributed under the MIT License. See [LICENSE](./LICENSE) for more information
 
 ## 📧 Contact
 
-Mail - [your-email@domain.com](mailto:your-email@domain.com)
-
-[Project link](https://github.com/your-username/your-repo)
-
+- GitHub: [NowaraJS](https://github.com/NowaraJS)
+- Package: [@nowarajs/error](https://www.npmjs.com/package/@nowarajs/error)
