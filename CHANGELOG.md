@@ -1,4 +1,16 @@
 
+## v1.1.3
+
+[compare changes](https://github.com/NowaraJS/error/compare/v1.1.2...v1.1.3)
+
+### 🌊 Types
+
+- **🌊:** [Update httpStatusCode type in HttpErrorOptions interface] Updated the httpStatusCode property in the HttpErrorOptions interface to allow both a key of HTTP_STATUS_CODES and a number, enhancing flexibility in error handling. ([5fba922](https://github.com/NowaraJS/error/commit/5fba922))
+
+### ❤️ Contributors
+
+- Komiroko <komiriko@pm.me>
+
 ## v1.1.2
 
 [compare changes](https://github.com/NowaraJS/error/compare/v1.1.1...v1.1.2)
