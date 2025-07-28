@@ -8,7 +8,12 @@ export class HttpError<const TCause = unknown> extends BaseError<TCause> {
 	public constructor(options?: Readonly<HttpErrorOptions<TCause>>) {
 		super(options);
 		super.name = 'HttpError';
-		this._httpStatusCode = HTTP_STATUS_CODES[options?.httpStatusCode ?? 'INTERNAL_SERVER_ERROR'];
+		const statusCodeOption: keyof typeof HTTP_STATUS_CODES | number | undefined = options?.httpStatusCode;
+
+		if (typeof statusCodeOption === 'number')
+			this._httpStatusCode = statusCodeOption;
+		else
+			this._httpStatusCode = HTTP_STATUS_CODES[statusCodeOption ?? 'INTERNAL_SERVER_ERROR'];
 	}
 
 	public get httpStatusCode(): number {

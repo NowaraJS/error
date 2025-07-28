@@ -11,5 +11,5 @@ export interface HttpErrorOptions<TCause = unknown> extends BaseErrorOptions<TCa
 	/**
 	 * The HTTP status code associated with the error
 	 */
-	httpStatusCode?: keyof typeof HTTP_STATUS_CODES;
+	httpStatusCode?: keyof typeof HTTP_STATUS_CODES | number;
 }
