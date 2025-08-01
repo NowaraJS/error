@@ -1,4 +1,28 @@
 
+## v1.1.4
+
+[compare changes](https://github.com/NowaraJS/error/compare/v1.1.3...v1.1.4)
+
+### 🧹 Refactors
+
+- **🧹:** [Refactor HttpError and HttpErrorOptions types for clarity] ([c645ef2](https://github.com/NowaraJS/error/commit/c645ef2))
+
+### 📖 Documentation
+
+- **📖:** [Add Copilot instructions for development workflow] ([f48ec23](https://github.com/NowaraJS/error/commit/f48ec23))
+
+### 📦 Build
+
+- **📦:** [Update TypeScript version in package.json] ## Build Changes - Updated TypeScript dependency from "^5.8.3" to "^5.9.2". ([2d517a0](https://github.com/NowaraJS/error/commit/2d517a0))
+
+### 🤖 CI
+
+- **🤖:** [Add Copilot setup workflow for automated steps] ([f4e3627](https://github.com/NowaraJS/error/commit/f4e3627))
+
+### ❤️ Contributors
+
+- Komiroko <komiriko@pm.me>
+
 ## v1.1.3
 
 [compare changes](https://github.com/NowaraJS/error/compare/v1.1.2...v1.1.3)
