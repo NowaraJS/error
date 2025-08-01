@@ -375,7 +375,7 @@ describe('HttpError', () => {
 				uuid: string;
 				date: string;
 			};
-			
+
 			expect(parsed.message).toBe('Serializable error');
 			expect(parsed.httpStatusCode).toBe(400);
 			expect(parsed.cause).toEqual({ details: 'Some details' });
