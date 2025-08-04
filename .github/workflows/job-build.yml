@@ -1,4 +1,5 @@
-name: Unit Test
+name: job-build
+run-name: "[job-build] ${{ inputs.branch }}"
 
 on:
   workflow_call:
@@ -12,10 +13,19 @@ on:
         required: true
 
 jobs:
-  unit-test:
-    name: Check unit tests
+  check-build:
+    name: Build Package
     runs-on: ubuntu-latest
     steps:
+      - name: Verify required secrets
+        run: |
+          echo "🔍 Verifying required secrets for build job..."
+          if [ -z "${{ secrets.KEY_SSH }}" ]; then
+            echo "❌ KEY_SSH secret is missing"
+            exit 1
+          fi
+          echo "✅ All required secrets are present"
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -31,6 +41,5 @@ jobs:
       - name: Install Dependencies
         run: bun install
 
-      - name: Run Unit Tests and update Summary
-        id: unit_test
-        run: bun run test:unit
+      - name: Run Build
+        run: bun run build
