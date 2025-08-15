@@ -1,4 +1,20 @@
 
+## v1.1.6
+
+[compare changes](https://github.com/NowaraJS/error/compare/v1.1.5...v1.1.6)
+
+### 📖 Documentation
+
+- **📖:** [update copilot instructions for clarity and structure] ([e9afb16](https://github.com/NowaraJS/error/commit/e9afb16))
+
+### 📦 Build
+
+- **📦:** [update typescript-eslint dependency to v8.39.1] Updated the typescript-eslint dependency from version 8.39.0 to 8.39.1 in package.json to ensure compatibility and access to the latest features and fixes. ([3a3863f](https://github.com/NowaraJS/error/commit/3a3863f))
+
+### ❤️ Contributors
+
+- Komiroko <komiriko@pm.me>
+
 ## v1.1.5
 
 [compare changes](https://github.com/NowaraJS/error/compare/v1.1.4...v1.1.5)
