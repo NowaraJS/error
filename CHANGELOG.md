@@ -1,4 +1,25 @@
 
+## v1.1.7
+
+[compare changes](https://github.com/NowaraJS/error/compare/v1.1.6...v1.1.7)
+
+### 📖 Documentation
+
+- **📖:** [add Contributor Covenant Code of Conduct] ([347c7c5](https://github.com/NowaraJS/error/commit/347c7c5))
+- **📖:** [add contributing guidelines] ([d9ef2ab](https://github.com/NowaraJS/error/commit/d9ef2ab))
+- **📖:** [add security policy documentation] ([534be9b](https://github.com/NowaraJS/error/commit/534be9b))
+- **📖:** [remove outdated error options and advanced usage examples] ([8d625a4](https://github.com/NowaraJS/error/commit/8d625a4))
+
+### 🦉 Chore
+
+- **🦉:** [update contact email in issue template] Updated the contact email in the issue template from komiriko@pm.me to nowarajs@pm.me to reflect the correct address for project inquiries. ([bba5f79](https://github.com/NowaraJS/error/commit/bba5f79))
+- **🦉:** [rename MIT License file with explicit .md] ([2a681d2](https://github.com/NowaraJS/error/commit/2a681d2))
+- **🦉:** [update package.json for keywords and repository info] ([b12c52b](https://github.com/NowaraJS/error/commit/b12c52b))
+
+### ❤️ Contributors
+
+- Komiroko <komiriko@pm.me>
+
 ## v1.1.6
 
 [compare changes](https://github.com/NowaraJS/error/compare/v1.1.5...v1.1.6)
