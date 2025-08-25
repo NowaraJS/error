@@ -70,65 +70,6 @@ try {
 }
 ```
 
-### Error Options
-
-```ts
-import type { BaseErrorOptions, HttpErrorOptions } from '@nowarajs/error/types';
-
-// Base error options
-interface BaseErrorOptions<TCause = unknown> {
-	message?: string;    // Error message
-	cause?: TCause;      // Error cause (original error or context)
-}
-
-// HTTP error options
-interface HttpErrorOptions<TCause = unknown> extends BaseErrorOptions<TCause> {
-	httpStatusCode?: keyof typeof HTTP_STATUS_CODES;  // HTTP status code
-}
-```
-
-### Advanced Usage with Custom Causes
-
-```ts
-import { BaseError, HttpError } from '@nowarajs/error';
-
-// Error with custom cause type
-interface ValidationContext {
-	field: string;
-	value: unknown;
-	rule: string;
-}
-
-try {
-	throw new BaseError<ValidationContext>({
-		message: 'Validation failed',
-		cause: {
-			field: 'email',
-			value: 'invalid-email',
-			rule: 'email_format'
-		}
-	});
-} catch (error) {
-	if (error instanceof BaseError && error.cause) {
-		console.log(`Field: ${error.cause.field}`);
-		console.log(`Invalid value: ${error.cause.value}`);
-		console.log(`Failed rule: ${error.cause.rule}`);
-	}
-}
-
-// Chaining errors
-try {
-	// Some operation that might fail
-	throw new Error('Database connection failed');
-} catch (originalError) {
-	throw new HttpError({
-		message: 'Unable to fetch user data',
-		httpStatusCode: 'INTERNAL_SERVER_ERROR',
-		cause: originalError
-	});
-}
-```
-
 ## 🐞 Error Classes
 
 ### BaseError
