@@ -1,1 +1,1 @@
-export { HTTP_STATUS_CODES } from './httpStatusCodes';
+export { HTTP_STATUS_CODES } from './http-status-codes';
