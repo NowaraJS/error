@@ -1,6 +1,6 @@
 {
 	"name": "@nowarajs/error",
-	"version": "1.1.9",
+	"version": "1.2.0",
 	"author": "NowaraJS",
 	"description": "A collection of error classes for NowaraJS",
 	"type": "module",
