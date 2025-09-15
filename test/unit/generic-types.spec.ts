@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'bun:test';
 
-import { BaseError, HttpError } from '#/index';
+import { BaseError } from '#/base-error';
+import { HttpError } from '#/http-error';
 
 describe('Generic Type TCause', () => {
 	describe('BaseError with typed cause', () => {
