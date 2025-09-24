@@ -1,6 +1,18 @@
 
 
 
+## v1.3.2
+
+[compare changes](https://github.com/NowaraJS/error/compare/v1.3.1...v1.3.2)
+
+### 📦 Build
+
+- **📦:** [Update dependencies] ([3bf111d](https://github.com/NowaraJS/error/commit/3bf111d))
+
+### ❤️ Contributors
+
+- Komiroko <komiriko@pm.me>
+
 ## v1.3.1
 
 [compare changes](https://github.com/NowaraJS/error/compare/v1.3.0...v1.3.1)
