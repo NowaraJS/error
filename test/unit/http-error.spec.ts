@@ -1,11 +1,11 @@
 import { describe, expect, test } from 'bun:test';
 
 import { BaseError } from '#/base-error';
-import { HTTP_ERROR_STATUS_CODES } from '#/enums/http-status-codes';
+import { HTTP_STATUS_CODES } from '#/enums/http-status-codes';
 import { HttpError } from '#/http-error';
 
-describe('HttpError', () => {
-	describe('constructor', () => {
+describe.concurrent('HttpError', () => {
+	describe.concurrent('constructor', () => {
 		test('should create HttpError with message only (defaults to 500)', () => {
 			const httpError = new HttpError('Internal server error');
 
@@ -54,19 +54,19 @@ describe('HttpError', () => {
 		});
 
 		test('should handle all available HTTP status codes', () => {
-			const statusCodes = Object.keys(HTTP_ERROR_STATUS_CODES) as (keyof typeof HTTP_ERROR_STATUS_CODES)[];
+			const statusCodes = Object.keys(HTTP_STATUS_CODES) as (keyof typeof HTTP_STATUS_CODES)[];
 
 			statusCodes.forEach((statusCode) => {
 				const httpError = new HttpError(`Error for ${statusCode}`, statusCode);
 
-				expect(httpError.httpStatusCode).toBe(HTTP_ERROR_STATUS_CODES[statusCode]);
+				expect(httpError.httpStatusCode).toBe(HTTP_STATUS_CODES[statusCode]);
 				expect(httpError.message).toBe(`Error for ${statusCode}`);
 			});
 		});
 
 		test('should default to INTERNAL_SERVER_ERROR when invalid status is provided', () => {
 			// Test with an invalid string that's not in HTTP_STATUS_CODES
-			const httpError = new HttpError('Server error', 'INVALID_STATUS' as keyof typeof HTTP_ERROR_STATUS_CODES);
+			const httpError = new HttpError('Server error', 'INVALID_STATUS' as keyof typeof HTTP_STATUS_CODES);
 
 			expect(httpError.httpStatusCode).toBe(500);
 			expect(httpError.message).toBe('Server error');
@@ -105,7 +105,7 @@ describe('HttpError', () => {
 		});
 	});
 
-	describe('properties', () => {
+	describe.concurrent('properties', () => {
 		test('should return correct values from properties', () => {
 			const httpError = new HttpError('Forbidden', 'FORBIDDEN', 'test cause');
 
@@ -152,9 +152,9 @@ describe('HttpError', () => {
 		});
 	});
 
-	describe('isClientError', () => {
+	describe.concurrent('isClientError', () => {
 		test('should return true for 4xx status codes', () => {
-			const clientErrorCodes: (keyof typeof HTTP_ERROR_STATUS_CODES)[] = [
+			const clientErrorCodes: (keyof typeof HTTP_STATUS_CODES)[] = [
 				'BAD_REQUEST',
 				'UNAUTHORIZED',
 				'FORBIDDEN',
@@ -173,7 +173,7 @@ describe('HttpError', () => {
 		});
 
 		test('should return false for 5xx status codes', () => {
-			const serverErrorCodes: (keyof typeof HTTP_ERROR_STATUS_CODES)[] = [
+			const serverErrorCodes: (keyof typeof HTTP_STATUS_CODES)[] = [
 				'INTERNAL_SERVER_ERROR',
 				'NOT_IMPLEMENTED',
 				'BAD_GATEWAY',
@@ -188,9 +188,9 @@ describe('HttpError', () => {
 		});
 	});
 
-	describe('isServerError', () => {
+	describe.concurrent('isServerError', () => {
 		test('should return true for 5xx status codes', () => {
-			const serverErrorCodes: (keyof typeof HTTP_ERROR_STATUS_CODES)[] = [
+			const serverErrorCodes: (keyof typeof HTTP_STATUS_CODES)[] = [
 				'INTERNAL_SERVER_ERROR',
 				'NOT_IMPLEMENTED',
 				'BAD_GATEWAY',
@@ -209,7 +209,7 @@ describe('HttpError', () => {
 		});
 
 		test('should return false for 4xx status codes', () => {
-			const clientErrorCodes: (keyof typeof HTTP_ERROR_STATUS_CODES)[] = [
+			const clientErrorCodes: (keyof typeof HTTP_STATUS_CODES)[] = [
 				'BAD_REQUEST',
 				'UNAUTHORIZED',
 				'FORBIDDEN',
@@ -225,7 +225,7 @@ describe('HttpError', () => {
 		});
 	});
 
-	describe('inheritance', () => {
+	describe.concurrent('inheritance', () => {
 		test('should properly extend BaseError and Error classes', () => {
 			const httpError = new HttpError('Test HTTP error');
 
@@ -267,7 +267,7 @@ describe('HttpError', () => {
 		});
 	});
 
-	describe('edge cases', () => {
+	describe.concurrent('edge cases', () => {
 		test('should handle default status code when no status is provided', () => {
 			const httpError = new HttpError('Error without status code');
 

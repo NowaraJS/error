@@ -2,8 +2,8 @@ import { describe, expect, test } from 'bun:test';
 
 import { BaseError } from '#/base-error';
 
-describe('BaseError', () => {
-	describe('constructor', () => {
+describe.concurrent('BaseError', () => {
+	describe.concurrent('constructor', () => {
 		test('should create a new BaseError instance with message and cause', () => {
 			const cause = { details: 'Invalid input data' };
 			const baseError = new BaseError('error.base.validation', cause);
@@ -75,7 +75,7 @@ describe('BaseError', () => {
 		});
 	});
 
-	describe('properties', () => {
+	describe.concurrent('properties', () => {
 		test('should return correct values from properties', () => {
 			const baseError = new BaseError('test.key', 'test cause');
 
@@ -115,7 +115,7 @@ describe('BaseError', () => {
 		});
 	});
 
-	describe('inheritance', () => {
+	describe.concurrent('inheritance', () => {
 		test('should properly extend Error class', () => {
 			const baseError = new BaseError('Test error');
 
@@ -151,7 +151,7 @@ describe('BaseError', () => {
 		});
 	});
 
-	describe('edge cases', () => {
+	describe.concurrent('edge cases', () => {
 		test('should handle undefined cause', () => {
 			const baseError = new BaseError('Error without cause');
 
