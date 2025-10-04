@@ -3,8 +3,8 @@ import { describe, expect, test } from 'bun:test';
 import { BaseError } from '#/base-error';
 import { HttpError } from '#/http-error';
 
-describe('Generic Type TCause', () => {
-	describe('BaseError with typed cause', () => {
+describe.concurrent('Generic Type TCause', () => {
+	describe.concurrent('BaseError with typed cause', () => {
 		test('should correctly type cause as specified generic', () => {
 			interface CustomCause {
 				code: number;
@@ -44,7 +44,7 @@ describe('Generic Type TCause', () => {
 		});
 	});
 
-	describe('HttpError with typed cause', () => {
+	describe.concurrent('HttpError with typed cause', () => {
 		test('should correctly type cause in HttpError', () => {
 			interface ApiErrorCause {
 				endpoint: string;
@@ -103,7 +103,7 @@ describe('Generic Type TCause', () => {
 		});
 	});
 
-	describe('Default behavior without generic type', () => {
+	describe.concurrent('Default behavior without generic type', () => {
 		test('should use unknown as default type for cause', () => {
 			const baseError = new BaseError('Default error', { anything: 'can go here' });
 			const httpError = new HttpError('Default HTTP error', 'BAD_REQUEST', [1, 2, 3]);
