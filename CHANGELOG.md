@@ -1,6 +1,38 @@
 
 
 
+## v1.3.3
+
+[compare changes](https://github.com/NowaraJS/error/compare/v1.3.2...v1.3.3)
+
+### 🧹 Refactors
+
+- **🧹:** [Refactor HTTP status codes and related imports] ([161b618](https://github.com/NowaraJS/error/commit/161b618))
+
+### 📦 Build
+
+- **📦:** [Update devDependencies to latest versions] ([8fa0abf](https://github.com/NowaraJS/error/commit/8fa0abf))
+
+### 🦉 Chore
+
+- **🦉:** [Remove Dependabot configuration file] ([80f4b15](https://github.com/NowaraJS/error/commit/80f4b15))
+
+### 🏀 Examples
+
+- **🏀:** [Remove example usage of generic typing in errors] ([8377d32](https://github.com/NowaraJS/error/commit/8377d32))
+
+### 🧪 Tests
+
+- **🧪:** [Update tests to use concurrent execution for perf] ([eb2d2a9](https://github.com/NowaraJS/error/commit/eb2d2a9))
+
+### 🤖 CI
+
+- **🤖:** [Update CI/CD workflows and actions for Bun and Git setup] ([a8fcb09](https://github.com/NowaraJS/error/commit/a8fcb09))
+
+### ❤️ Contributors
+
+- Komiroko <komiriko@pm.me>
+
 ## v1.3.2
 
 [compare changes](https://github.com/NowaraJS/error/compare/v1.3.1...v1.3.2)
