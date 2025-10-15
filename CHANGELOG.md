@@ -1,6 +1,26 @@
 
 
 
+## v1.3.4
+
+[compare changes](https://github.com/NowaraJS/error/compare/v1.3.3...v1.3.4)
+
+### 📖 Documentation
+
+- **📖:** [Update README for clarity and feature adjustments] ([2a52e8d](https://github.com/NowaraJS/error/commit/2a52e8d))
+
+### 📦 Build
+
+- **📦:** [Update devDependencies for improved compatibility] ([29553f0](https://github.com/NowaraJS/error/commit/29553f0))
+
+### 🎨 Styles
+
+- **🎨:** [Enhance ESLint configuration for better code quality] ([456afe8](https://github.com/NowaraJS/error/commit/456afe8))
+
+### ❤️ Contributors
+
+- Komiroko <komiriko@pm.me>
+
 ## v1.3.3
 
 [compare changes](https://github.com/NowaraJS/error/compare/v1.3.2...v1.3.3)
