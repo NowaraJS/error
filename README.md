@@ -17,16 +17,14 @@
 
 > A comprehensive collection of error classes for robust error handling in TypeScript applications.
 
-**NowaraJS Error** provides a structured approach to error handling with enhanced error classes that include additional metadata like unique identifiers, timestamps, and HTTP status codes. It's designed to improve debugging and error tracking in modern applications.
+**NowaraJS Error** provides a structured approach to error handling with enhanced error classes that include additional metadata like timestamps, and HTTP status codes. It's designed to improve debugging and error tracking.
 
 ## ✨ Features
 
-- 🆔 **Unique Error IDs**: Each error gets a UUID for tracking
 - 📅 **Timestamps**: Automatic error creation timestamps
 - 🌐 **HTTP Status Codes**: Built-in HTTP error support with status codes
-- 🐞 **Error Classification**: Distinguish between client and server errors
-- 🎯 **Type Safety**: Full TypeScript support with generics
-- 📦 **Lightweight**: Minimal dependencies and optimized for performance
+- 🎯 **Type Safety**: Full TypeScript support with generics for the cause of Errors
+- 📦 **Lightweight**: 0 dependencies
 - 🛠️ **Easy Integration**: Simple import and usage
 
 ## 🔧 Installation
@@ -34,8 +32,6 @@
 ```bash
 bun add @nowarajs/error
 ```
-
-> **Note**: This package supports both Bun and Node.js environments.
 
 ## ⚙️ Usage
 
@@ -49,7 +45,6 @@ try {
 	throw new BaseError({ message: 'Something went wrong' });
 } catch (error) {
 	if (error instanceof BaseError) {
-		console.log(`Error ID: ${error.uuid}`);
 		console.log(`Occurred at: ${error.date.toISOString()}`);
 		console.log(`Message: ${error.message}`);
 	}
@@ -78,7 +73,6 @@ The foundation error class with enhanced metadata:
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `uuid` | `string` | Unique identifier for the error |
 | `date` | `Date` | Timestamp when the error was created |
 | `message` | `string` | Error message |
 | `cause` | `TCause` | Optional cause of the error |
@@ -96,6 +90,12 @@ Extends BaseError with HTTP-specific functionality:
 ### Available HTTP Status Codes
 
 ```ts
+// Informational responses (1xx)
+'CONTINUE', 'SWITCHING_PROTOCOLS', 'PROCESSING', // ... and more
+
+// Successful responses (2xx)
+'OK', 'CREATED', 'ACCEPTED', 'NON_AUTHORITATIVE_INFORMATION', // ... and more
+
 // Client errors (4xx)
 'BAD_REQUEST', 'UNAUTHORIZED', 'FORBIDDEN', 'NOT_FOUND', 
 'METHOD_NOT_ALLOWED', 'CONFLICT', 'UNPROCESSABLE_ENTITY', 
