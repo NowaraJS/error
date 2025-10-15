@@ -1,6 +1,18 @@
 
 
 
+## v1.3.5
+
+[compare changes](https://github.com/NowaraJS/error/compare/v1.3.4...v1.3.5)
+
+### 🦉 Chore
+
+- **🦉:** [Add semver field to changelog types] ([dbd402d](https://github.com/NowaraJS/error/commit/dbd402d))
+
+### ❤️ Contributors
+
+- Komiroko <komiriko@pm.me>
+
 ## v1.3.4
 
 [compare changes](https://github.com/NowaraJS/error/compare/v1.3.3...v1.3.4)
