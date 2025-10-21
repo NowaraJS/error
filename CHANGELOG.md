@@ -1,6 +1,18 @@
 
 
 
+## v1.3.7
+
+[compare changes](https://github.com/NowaraJS/error/compare/v1.3.6...v1.3.7)
+
+### 🧪 Tests
+
+- **🧪:** [tests refacto] ([d6dfa91](https://github.com/NowaraJS/error/commit/d6dfa91))
+
+### ❤️ Contributors
+
+- Komiroko <komiriko@pm.me>
+
 ## v1.3.6
 
 [compare changes](https://github.com/NowaraJS/error/compare/v1.3.5...v1.3.6)
