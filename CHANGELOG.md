@@ -1,6 +1,23 @@
 
 
 
+## v1.3.6
+
+[compare changes](https://github.com/NowaraJS/error/compare/v1.3.5...v1.3.6)
+
+### 🦉 Chore
+
+- **🦉:** [Update devDependencies in package.json] ([91a208a](https://github.com/NowaraJS/error/commit/91a208a))
+- **🦉:** [Update .gitignore to include .zed directory] ([f606d2d](https://github.com/NowaraJS/error/commit/f606d2d))
+
+### 🤖 CI
+
+- **🤖:** [Rename CI workflow from main-ci to main-test] ([cd537d9](https://github.com/NowaraJS/error/commit/cd537d9))
+
+### ❤️ Contributors
+
+- Komiroko <komiriko@pm.me>
+
 ## v1.3.5
 
 [compare changes](https://github.com/NowaraJS/error/compare/v1.3.4...v1.3.5)
