@@ -1,6 +1,18 @@
 
 
 
+## v1.3.8
+
+[compare changes](https://github.com/NowaraJS/error/compare/v1.3.7...v1.3.8)
+
+### 📖 Documentation
+
+- **📖:** [Update readme] ([764cfe2](https://github.com/NowaraJS/error/commit/764cfe2))
+
+### ❤️ Contributors
+
+- Komiroko <komiriko@pm.me>
+
 ## v1.3.7
 
 [compare changes](https://github.com/NowaraJS/error/compare/v1.3.6...v1.3.7)
