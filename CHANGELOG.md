@@ -1,4 +1,16 @@
 
+## v1.3.10
+
+[compare changes](https://github.com/NowaraJS/error/compare/v1.3.9...v1.3.10)
+
+### 🔧 Fixes
+
+- **🔧:** [rename file base-error to app-error] ([56bd7de](https://github.com/NowaraJS/error/commit/56bd7de))
+
+### ❤️ Contributors
+
+- Komiroko <komiriko@pm.me>
+
 ## v1.3.9
 
 [compare changes](https://github.com/NowaraJS/error/compare/v1.3.8...v1.3.9)
