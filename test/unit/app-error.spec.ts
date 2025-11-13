@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'bun:test';
 
-import { AppError } from '#/base-error';
+import { AppError } from '#/app-error';
 
 describe.concurrent('AppError', (): void => {
 	describe.concurrent('when created with message and cause', (): void => {
