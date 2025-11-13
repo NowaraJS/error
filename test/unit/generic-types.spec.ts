@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'bun:test';
 
-import { AppError } from '#/base-error';
+import { AppError } from '#/app-error';
 import { HttpError } from '#/http-error';
 
 describe.concurrent('Generic Type TCause', (): void => {

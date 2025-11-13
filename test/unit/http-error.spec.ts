@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'bun:test';
 
-import { AppError } from '#/base-error';
+import { AppError } from '#/app-error';
 import { HTTP_STATUS_CODES } from '#/enums/http-status-codes';
 import { HttpError } from '#/http-error';
 
