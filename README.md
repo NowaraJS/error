@@ -1,39 +1,28 @@
 # 🐞 NowaraJS Error
 
+Handling errors in TypeScript is usually a mess of `Error` objects without context. I built NowaraJS Error to standardize how I track and expose errors in my APIs, ensuring every crash is traceable and safe for production.
+
+## Why this package?
+
+The goal is simple: **Stop exposing server internals to clients.**
+
+This package forces a clear distinction between what the user sees (`HttpError`) and what your logs see (`InternalError`), while automatically tagging everything with UUID v7 for instant log correlation.
+
 ## 📌 Table of Contents
 
-- [🐞 NowaraJS Error](#-nowarajs-error)
-	- [📌 Table of Contents](#-table-of-contents)
-	- [📝 Description](#-description)
-	- [✨ Features](#-features)
-	- [🔧 Installation](#-installation)
-	- [⚙️ Usage](#-usage)
-		- [HttpError - Client-Facing Errors](#httperror---client-facing-errors)
-		- [InternalError - Server-Side Errors](#internalerror---server-side-errors)
-		- [AppError - Base Class (Advanced)](#apperror---base-class-advanced)
-	- [🐞 Error Classes](#-error-classes)
-		- [AppError (Base Class)](#apperror-base-class)
-		- [HttpError](#httperror)
-		- [InternalError](#internalerror)
-	- [📚 API Reference](#-api-reference)
-	- [⚖️ License](#-license)
-	- [📧 Contact](#-contact)
-
-## 📝 Description
-
-> A comprehensive collection of error classes for robust error handling in TypeScript applications, with built-in tracing and HTTP status support.
-
-**NowaraJS Error** provides a structured approach to error handling with enhanced error classes that include automatic UUID generation for tracing, timestamps, and HTTP status codes. Perfect for APIs and production applications where error tracking and security are critical.
+- [Features](#-features)
+- [Installation](#-installation)
+- [Usage](#-usage)
+- [API Reference](#-api-reference)
+- [License](#-license)
+- [Contact](#-contact)
 
 ## ✨ Features
 
-- 🔍 **UUID Tracking**: Auto-generated UUID v7 for every error (traceable across logs)
-- 📅 **Timestamps**: Automatic error creation timestamps
-- 🌐 **HTTP Status Codes**: Built-in HTTP error support with status codes
-- 🔒 **Security-First**: Separate classes for client-facing vs internal errors
-- 🎯 **Type Safety**: Full TypeScript support with generics for error causes
-- 📦 **Lightweight**: 0 dependencies
-- 🛠️ **Easy Integration**: Simple import and usage
+- 🔍 **UUID v7 Tracking**: Every error gets a unique, time-sortable ID automatically.
+- 🔒 **Security-First**: Native separation between client-safe messages and sensitive internal logs.
+- 📅 **Built-in Context**: Timestamps and HTTP status codes are part of the instance.
+- 📦 **Zero Dependencies**: Pure TypeScript, tiny footprint.
 
 ## 🔧 Installation
 
@@ -45,137 +34,40 @@ bun add @nowarajs/error
 
 ### HttpError - Client-Facing Errors
 
-Use `HttpError` for controlled errors that you want to expose to API clients:
+Use this when you want to tell the user *why* they failed (e.g., 400 Bad Request).
 
 ```ts
 import { HttpError } from '@nowarajs/error';
 
-// HTTP error with custom details
-try {
-	throw new HttpError(
-		'Validation failed',
-		'BAD_REQUEST',
-		{ fields: ['email', 'password'] } // Safe to expose to client
-	);
-} catch (error) {
-	if (error instanceof HttpError) {
-		// Client response
-		return {
-			status: error.httpStatusCode,  // 400
-			message: error.message,
-			uuid: error.uuid,              // For support tickets
-			details: error.cause           // { fields: [...] }
-		};
-	}
-}
+throw new HttpError(
+    'Invalid email address',
+    'BAD_REQUEST',
+    { field: 'email' }
+);
 ```
 
 ### InternalError - Server-Side Errors
 
-Use `InternalError` for unexpected errors that should **never** expose details to clients:
+Use this to wrap unexpected failures (DB crashes, API timeouts). Log the full `cause` server-side, but only send the `uuid` to the client.
 
 ```ts
 import { InternalError } from '@nowarajs/error';
 
-// Database or unexpected errors
 try {
-	await db.query('SELECT * FROM users');
-} catch (dbError) {
-	// Wrap the error - details stay server-side
-	throw new InternalError('Database query failed', dbError);
-}
-
-// In your error handler
-try {
-	// ... some operation
-} catch (error) {
-	if (error instanceof InternalError) {
-		// Log full details server-side
-		console.error({
-			uuid: error.uuid,
-			message: error.message,
-			cause: error.cause,     // Full database error
-			stack: error.stack
-		});
-
-		// Send safe response to client (never expose error.cause!)
-		return {
-			statusCode: 500,
-			message: 'An error occurred',
-			uuid: error.uuid        // Client can reference this in support
-		};
-	}
+    await db.save(user);
+} catch (err) {
+    // The original 'err' is hidden from the client but kept in 'cause'
+    throw new InternalError('Failed to persist user', err);
 }
 ```
-
-### AppError - Base Class (Advanced)
-
-`AppError` is the base class for all errors. Typically, you'll use `HttpError` or `InternalError` instead:
-
-```ts
-import { AppError } from '@nowarajs/error';
-
-// Custom error class example
-class ValidationError extends AppError {
-	constructor(message: string, fields: string[]) {
-		super(message, { fields });
-	}
-}
-
-const error = new ValidationError('Invalid input', ['email']);
-console.log(error.uuid);   // Auto-generated UUID v7
-console.log(error.date);   // Timestamp
-console.log(error.cause);  // { fields: ['email'] }
-```
-
-## 🐞 Error Classes
-
-### AppError (Base Class)
-
-The foundation error class with enhanced metadata and automatic UUID generation:
-
-| Property | Type | Description |
-|----------|------|-------------|
-| `uuid` | `string` | Auto-generated UUID v7 for error tracking |
-| `date` | `Date` | Timestamp when the error was created |
-| `message` | `string` | Error message |
-| `cause` | `TCause` | Optional cause of the error (generic type) |
-
-### HttpError
-
-Extends `AppError` for **controlled, client-facing errors** with HTTP status codes:
-
-| Property | Type | Description |
-|----------|------|-------------|
-| `httpStatusCode` | `number` | HTTP status code (e.g., 404, 400, 500) |
-| `isClientError` | `boolean` | True if status code is 4xx |
-| `isServerError` | `boolean` | True if status code is 5xx |
-
-*Inherits: `uuid`, `date`, `message`, `cause` from AppError*
-
-**Use cases:** Validation errors, not found, unauthorized, forbidden, etc.
-
-### InternalError
-
-Extends `AppError` for **unexpected, server-side errors** that should never expose details:
-
-No additional properties beyond AppError. Always returns status 500.
-
-*Inherits: `uuid`, `date`, `message`, `cause` from AppError*
-
-**Use cases:** Database errors, external service failures, unexpected exceptions.
-
-**⚠️ Security Note:** Always return status 500 with a generic message and only the `uuid` to clients. Log full details server-side only.
 
 ## 📚 API Reference
 
-For the complete list of available HTTP status codes and full API documentation, see:
-
-- [Reference Documentation](https://nowarajs.github.io/error/)
+Full docs: [nowarajs.github.io/error](https://nowarajs.github.io/error/)
 
 ## ⚖️ License
 
-Distributed under the MIT License. See [LICENSE](./LICENSE) for more information.
+MIT - Feel free to use it.
 
 ## 📧 Contact
 
