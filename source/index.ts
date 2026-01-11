@@ -1,3 +1,4 @@
 export { AppError } from './app-error';
-export { HttpError } from './http-error';
+export { HttpError, type HttpStatusCode, type HttpStatusKey } from './http-error';
 export { InternalError } from './internal-error';
+
