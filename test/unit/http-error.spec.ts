@@ -39,7 +39,9 @@ describe.concurrent('HttpError', (): void => {
 
 			expect(httpError.uuid).toBeTypeOf('string');
 			expect(httpError.uuid).toHaveLength(36);
-			expect(httpError.uuid).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
+			expect(httpError.uuid).toMatch(
+				/^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+			);
 		});
 	});
 
@@ -63,7 +65,9 @@ describe.concurrent('HttpError', (): void => {
 		});
 
 		test('should handle all available HTTP status codes', (): void => {
-			const statusCodes = Object.keys(HTTP_STATUS_CODES) as (keyof typeof HTTP_STATUS_CODES)[];
+			const statusCodes = Object.keys(
+				HTTP_STATUS_CODES
+			) as (keyof typeof HTTP_STATUS_CODES)[];
 
 			statusCodes.forEach((statusCode): void => {
 				const httpError = new HttpError(`Error for ${statusCode}`, statusCode);
@@ -74,7 +78,10 @@ describe.concurrent('HttpError', (): void => {
 		});
 
 		test('should default to 500 for invalid status key', (): void => {
-			const httpError = new HttpError('Server error', 'INVALID_STATUS' as keyof typeof HTTP_STATUS_CODES);
+			const httpError = new HttpError(
+				'Server error',
+				'INVALID_STATUS' as keyof typeof HTTP_STATUS_CODES
+			);
 
 			expect(httpError.httpStatusCode).toBe(500);
 			expect(httpError.message).toBe('Server error');
@@ -105,7 +112,11 @@ describe.concurrent('HttpError', (): void => {
 
 	describe.concurrent('when cause has different types', (): void => {
 		test('should accept string cause', () => {
-			const errorWithString = new HttpError('String cause error', 'BAD_REQUEST', 'String cause');
+			const errorWithString = new HttpError(
+				'String cause error',
+				'BAD_REQUEST',
+				'String cause'
+			);
 			expect(errorWithString.cause).toBe('String cause');
 		});
 
@@ -115,13 +126,20 @@ describe.concurrent('HttpError', (): void => {
 		});
 
 		test('should accept object cause', (): void => {
-			const errorWithObject = new HttpError('Object cause error', 'INTERNAL_SERVER_ERROR', { code: 500, details: 'Internal error' });
+			const errorWithObject = new HttpError('Object cause error', 'INTERNAL_SERVER_ERROR', {
+				code: 500,
+				details: 'Internal error'
+			});
 			expect(errorWithObject.cause).toEqual({ code: 500, details: 'Internal error' });
 		});
 
 		test('should preserve original Error instance', (): void => {
 			const originalError = new Error('Original error');
-			const httpError = new HttpError('Wrapped HTTP error', 'INTERNAL_SERVER_ERROR', originalError);
+			const httpError = new HttpError(
+				'Wrapped HTTP error',
+				'INTERNAL_SERVER_ERROR',
+				originalError
+			);
 
 			expect(httpError.cause).toBe(originalError);
 			expect(httpError.stack).toContain('HttpError');
@@ -328,7 +346,9 @@ describe.concurrent('HttpError', (): void => {
 
 	describe.concurrent('when serialized', (): void => {
 		test('should convert to JSON', (): void => {
-			const httpError = new HttpError('Serializable error', 'BAD_REQUEST', { details: 'Some details' });
+			const httpError = new HttpError('Serializable error', 'BAD_REQUEST', {
+				details: 'Some details'
+			});
 
 			const serialized = JSON.stringify({
 				message: httpError.message,

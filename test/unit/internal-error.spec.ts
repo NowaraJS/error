@@ -19,7 +19,9 @@ describe.concurrent('InternalError', (): void => {
 
 			expect(internalError.uuid).toBeTypeOf('string');
 			expect(internalError.uuid).toHaveLength(36);
-			expect(internalError.uuid).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
+			expect(internalError.uuid).toMatch(
+				/^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+			);
 		});
 
 		test('should have undefined cause', (): void => {
@@ -83,7 +85,9 @@ describe.concurrent('InternalError', (): void => {
 			const errors = Array.from({ length: 10 }, (_, i) => new InternalError(`Error ${i}`));
 
 			errors.forEach((error) => {
-				expect(error.uuid).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
+				expect(error.uuid).toMatch(
+					/^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+				);
 			});
 
 			const uniqueIds = new Set(errors.map((e) => e.uuid));
@@ -175,7 +179,9 @@ describe.concurrent('InternalError', (): void => {
 
 	describe.concurrent('when serialized', (): void => {
 		test('should convert to JSON with uuid', (): void => {
-			const internalError = new InternalError('Serializable error', { details: 'Some details' });
+			const internalError = new InternalError('Serializable error', {
+				details: 'Some details'
+			});
 
 			const serialized = JSON.stringify({
 				message: internalError.message,
