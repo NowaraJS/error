@@ -10,7 +10,6 @@ export class AppError<const TCause = unknown> extends Error {
 		this.cause = cause;
 		this.name = new.target.name;
 
-		if (Error.captureStackTrace)
-			Error.captureStackTrace(this, new.target);
+		if (Error.captureStackTrace) Error.captureStackTrace(this, new.target);
 	}
 }
