@@ -13,17 +13,23 @@ describe.concurrent('AppError', (): void => {
 		});
 
 		test('should capture creation timestamp', (): void => {
-			const appError = new AppError('error.base.validation', { details: 'Invalid input data' });
+			const appError = new AppError('error.base.validation', {
+				details: 'Invalid input data'
+			});
 
 			expect(appError.date).toBeInstanceOf(Date);
 		});
 
 		test('should generate UUID v7', (): void => {
-			const appError = new AppError('error.base.validation', { details: 'Invalid input data' });
+			const appError = new AppError('error.base.validation', {
+				details: 'Invalid input data'
+			});
 
 			expect(appError.uuid).toBeTypeOf('string');
 			expect(appError.uuid).toHaveLength(36);
-			expect(appError.uuid).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
+			expect(appError.uuid).toMatch(
+				/^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+			);
 		});
 
 		test('should preserve message and cause', (): void => {
@@ -35,7 +41,9 @@ describe.concurrent('AppError', (): void => {
 		});
 
 		test('should set correct name and stack', (): void => {
-			const appError = new AppError('error.base.validation', { details: 'Invalid input data' });
+			const appError = new AppError('error.base.validation', {
+				details: 'Invalid input data'
+			});
 
 			expect(appError.name).toBe('AppError');
 			expect(appError.stack).toBeTypeOf('string');
@@ -115,7 +123,10 @@ describe.concurrent('AppError', (): void => {
 		});
 
 		test('should accept object cause', (): void => {
-			const appError = new AppError('Error with object cause', { code: 500, details: 'Internal error' });
+			const appError = new AppError('Error with object cause', {
+				code: 500,
+				details: 'Internal error'
+			});
 
 			expect(appError.cause).toEqual({ code: 500, details: 'Internal error' });
 		});

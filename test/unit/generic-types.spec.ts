@@ -11,10 +11,10 @@ describe.concurrent('Generic Type TCause', (): void => {
 				details: string;
 			}
 
-			const error = new AppError<CustomCause>(
-				'Custom error',
-				{ code: 1001, details: 'Something went wrong' }
-			);
+			const error = new AppError<CustomCause>('Custom error', {
+				code: 1001,
+				details: 'Something went wrong'
+			});
 
 			expect(error.cause).toEqual({ code: 1001, details: 'Something went wrong' });
 
@@ -55,11 +55,11 @@ describe.concurrent('Generic Type TCause', (): void => {
 				statusCode: number;
 			}
 
-			const error = new HttpError<ApiErrorCause>(
-				'API request failed',
-				'BAD_REQUEST',
-				{ endpoint: '/users', method: 'POST', statusCode: 400 }
-			);
+			const error = new HttpError<ApiErrorCause>('API request failed', 'BAD_REQUEST', {
+				endpoint: '/users',
+				method: 'POST',
+				statusCode: 400
+			});
 
 			expect(error.httpStatusCode).toBe(400);
 			expect(error.cause).toEqual({ endpoint: '/users', method: 'POST', statusCode: 400 });
@@ -95,14 +95,24 @@ describe.concurrent('Generic Type TCause', (): void => {
 		test('should handle union types as cause', (): void => {
 			type MixedCause = string | { code: number } | Error;
 
-			const stringError = new HttpError<MixedCause>('String cause', 'BAD_REQUEST', 'validation failed');
+			const stringError = new HttpError<MixedCause>(
+				'String cause',
+				'BAD_REQUEST',
+				'validation failed'
+			);
 			expect(stringError.cause).toBe('validation failed');
 
-			const objectError = new HttpError<MixedCause>('Object cause', 'NOT_FOUND', { code: 404 });
+			const objectError = new HttpError<MixedCause>('Object cause', 'NOT_FOUND', {
+				code: 404
+			});
 			expect(objectError.cause).toEqual({ code: 404 });
 
 			const errorCause = new Error('Original error');
-			const errorError = new HttpError<MixedCause>('Error cause', 'INTERNAL_SERVER_ERROR', errorCause);
+			const errorError = new HttpError<MixedCause>(
+				'Error cause',
+				'INTERNAL_SERVER_ERROR',
+				errorCause
+			);
 			expect(errorError.cause).toBe(errorCause);
 		});
 	});
