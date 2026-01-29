@@ -1,6 +1,6 @@
 {
 	"name": "@nowarajs/error",
-	"version": "1.4.0",
+	"version": "1.4.1",
 	"description": "A collection of error classes for NowaraJS",
 	"keywords": [
 		"bun",
