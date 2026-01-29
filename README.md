@@ -34,16 +34,12 @@ bun add @nowarajs/error
 
 ### HttpError - Client-Facing Errors
 
-Use this when you want to tell the user *why* they failed (e.g., 400 Bad Request).
+Use this when you want to tell the user _why_ they failed (e.g., 400 Bad Request).
 
 ```ts
 import { HttpError } from '@nowarajs/error';
 
-throw new HttpError(
-    'Invalid email address',
-    'BAD_REQUEST',
-    { field: 'email' }
-);
+throw new HttpError('Invalid email address', 'BAD_REQUEST', { field: 'email' });
 ```
 
 ### InternalError - Server-Side Errors
@@ -54,10 +50,10 @@ Use this to wrap unexpected failures (DB crashes, API timeouts). Log the full `c
 import { InternalError } from '@nowarajs/error';
 
 try {
-    await db.save(user);
+	await db.save(user);
 } catch (err) {
-    // The original 'err' is hidden from the client but kept in 'cause'
-    throw new InternalError('Failed to persist user', err);
+	// The original 'err' is hidden from the client but kept in 'cause'
+	throw new InternalError('Failed to persist user', err);
 }
 ```
 
